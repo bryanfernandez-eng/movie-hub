@@ -56,8 +56,10 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    if (!email || !password){
-      return res.status(400).json({ success: false, message: "All fields required."})
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields required." });
     }
 
     const user = await User.findOne({ email });
@@ -91,22 +93,41 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.cookie('jwt', '', {maxAge: 0}); 
-    return res.status(200).json({success: true, message: "Logout successful."}); 
+    res.cookie("jwt", "", { maxAge: 0 });
+    return res
+      .status(200)
+      .json({ success: true, message: "Logout successful." });
   } catch (error) {
     console.log("Error in logout controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
   }
 };
 
+export const deleteAccount = async (req, res) => {
+  try {
+    const user = req.user;
 
-export const updateProfile = async (req, res) => {};
+    if (!user) {
+      return res
+        .status(404)
+        .jason({ success: false, message: "User not found." });
+    }
 
-export const deleteAccount = async (request, res) => {};
+    await User.findByIdAndDelete(user._id);
+
+    res.cookie("jwt", "", { maxAge: 0 });
+    return res
+      .status(200)
+      .json({ success: true, message: "Account deleted successfully." });
+  } catch (error) {
+    console.log("Error in deleteAccount controller:", error.message);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+};
 
 export const checkAuth = async (req, res) => {
   try {
-    return res.status(200).json(req.user); 
+    return res.status(200).json(req.user);
   } catch (error) {
     console.log("Error in checkAuth controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
