@@ -33,6 +33,12 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      "no-unused-vars": [
+        "error",
+        {
+          "varsIgnorePattern": "React"
+        }
+      ]
     },
   },
 ]

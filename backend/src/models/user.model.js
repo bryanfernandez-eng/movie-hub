@@ -20,8 +20,7 @@ const userSchema = new mongoose.Schema(
       {
         movieId: {
           type: Number,
-          required: true,
-          unique: true,
+          // required: true,
         },
         hasWatched: {
           type: Boolean,

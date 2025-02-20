@@ -92,8 +92,17 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
+  console.log("logout");
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    console.log("B4: ", req.cookies);
+    res.cookie("jwt", "", {
+      maxAge: 0,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: false,
+    });
+    console.log("Cookie cleared");
+    console.log("After: ", req.cookies);
     return res
       .status(200)
       .json({ success: true, message: "Logout successful." });
@@ -127,7 +136,7 @@ export const deleteAccount = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
   try {
-    return res.status(200).json(req.user);
+    return res.status(200).json({ success: true, user: req.user });
   } catch (error) {
     console.log("Error in checkAuth controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
