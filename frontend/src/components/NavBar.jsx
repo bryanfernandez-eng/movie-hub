@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function NavBar() {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const location = useLocation();
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
 
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
   return (
-    <nav className="bg-gray-900 px-4 py-3 bg-slate-950" style={{ userSelect: "none" }}>
+    <nav
+      className="px-4 py-3 bg-slate-950"
+      style={{ userSelect: "none" }}
+    >
       <div className="container mx-auto flex flex-col md:flex-row items-center">
         <div className="flex justify-between w-full md:w-auto">
-          <Link to="/" className="text-white text-xl font-bold">
-            MovieHub
+          <Link to="/" className="flex text-white text-xl font-bold">
+            Movies <span className="text-amber-100">Hub</span>
           </Link>
           <div
             className="text-white cursor-pointer flex md:hidden items-center"
@@ -32,17 +40,32 @@ function NavBar() {
         >
           <ul className="flex flex-col md:flex-row items-center md:mx-auto space-y-2 md:space-y-0 md:space-x-4">
             <li>
-              <Link to="/search" className="text-white hover:text-gray-300 transition-colors">
+              <Link
+                to="/search"
+                className={`hover:text-slate-300 transition-colors ${
+                  isActive("/search") ? "text-amber-100" : "text-slate-100"
+                }`}
+              >
                 Search
               </Link>
             </li>
             <li>
-              <Link to="/trending" className="text-white hover:text-gray-300 transition-colors">
+              <Link
+                to="/trending"
+                className={`hover:text-slate-300 transition-colors ${
+                  isActive("/trending") ? "text-amber-100" : "text-slate-100"
+                }`}
+              >
                 Trending
               </Link>
             </li>
             <li>
-              <Link to="/upcoming" className="text-white hover:text-gray-300 transition-colors">
+              <Link
+                to="/upcoming"
+                className={`hover:text-slate-300 transition-colors ${
+                  isActive("/upcoming") ? "text-amber-100" : "text-slate-100"
+                }`}
+              >
                 Upcoming
               </Link>
             </li>
@@ -51,15 +74,19 @@ function NavBar() {
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
             <Link
               to={"/signup"}
-              className="text-white hover:text-gray-300 transition-colors"
+              className={`hover:text-slate-300 transition-colors ${
+                isActive("/signup") ? "text-amber-100" : "text-slate-100"
+              }`}
             >
               {"Signup"}
             </Link>
             <Link
-              to={ "/login"}
-              className="text-white hover:text-gray-300 transition-colors"
+              to={"/login"}
+              className={`hover:text-slate-300 transition-colors ${
+                isActive("/login") ? "text-amber-100" : "text-slate-100"
+              }`}
             >
-              { "Login"}
+              {"Login"}
             </Link>
           </div>
         </div>
