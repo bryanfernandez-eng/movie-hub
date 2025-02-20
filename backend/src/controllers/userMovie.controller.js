@@ -182,16 +182,19 @@ export const removeRating = async (req, res) => {
     );
 
     if (movieIndex > -1 && user.movies[movieIndex].hasWatched) {
+
+      if(!user.movies[movieIndex].rating){
+        return res.status(400).json({success: false, message: "Rating was already removed"});
+      }
+
       user.movies[movieIndex].rating = null;
+      await user.save();
+      return res.status(200).json({ success: true, results: user });
     } else {
       return res
         .status(404)
         .json({ success: false, message: "Movie not found or not watched" });
     }
-
-    await user.save();
-
-    return res.status(200).json({ success: true, results: user });
   } catch (error) {
     console.log("Error in remove rating controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
