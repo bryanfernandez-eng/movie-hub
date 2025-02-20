@@ -82,6 +82,9 @@ function SignupPage() {
             Register
           </button>
         </form>
+        <button className="text-slate-100 hover:text-slate-300">
+          Already have an account?
+        </button>
       </div>
     </div>
   );
