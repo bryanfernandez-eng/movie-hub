@@ -8,7 +8,7 @@ import {
 export const fetchTrendingMovies = async (req, res) => {
   try {
     const data = await getTrendingMovies();
-    return res.status(200).json({ sucess: true, results: data });
+    return res.status(200).json({ success: true, results: data });
   } catch (error) {
     console.log("Error in fetchTrendingMovies controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
