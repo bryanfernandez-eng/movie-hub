@@ -10,15 +10,21 @@ export const protectRoute = async (req, res, next) => {
         .json({ success: false, message: "Not authorized, token is required" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!decoded) {
+    let decodedToken;
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        return res
+          .status(401)
+          .json({ success: false, message: "Token has expired" });
+      }
       return res
         .status(401)
         .json({ success: false, message: "Not authorized, token is invalid" });
     }
 
-    const user = await User.findById(decoded.userId).select("-password");
+    const user = await User.findById(decodedToken.userId).select("-password");
 
     if (!user) {
       return res

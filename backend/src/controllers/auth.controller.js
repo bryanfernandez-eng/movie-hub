@@ -38,8 +38,8 @@ export const signup = async (req, res) => {
 
     // Save the new user to the database and generate a JWT token for authentication
     if (newUser) {
-      generateToken(newUser._id, res);
       await newUser.save();
+      generateToken(newUser._id, res);
       res
         .status(201)
         .json({ success: true, message: "User created successfully." });
@@ -119,7 +119,7 @@ export const deleteAccount = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .jason({ success: false, message: "User not found." });
+        .json({ success: false, message: "User not found." });
     }
 
     await User.findByIdAndDelete(user._id);
