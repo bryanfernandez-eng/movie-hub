@@ -39,7 +39,8 @@ function SignupPage() {
     try {
       const result = await signup(fields.name, fields.email, fields.password); 
       if(result.success){
-        alert("Signup successful!"); 
+        alert("Signup successfulL!"); 
+
         navigate("/"); 
       }
       else{

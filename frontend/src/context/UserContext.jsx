@@ -10,7 +10,7 @@ const useUserContextState = () => {
 
     const login = async (email, password) => {
         try {
-            await backend.post('/login', { email, password });
+            await backend.post('/auth/login', { email, password });
             await checkAuth(); 
             return { success: true };
         } catch (error) {
@@ -21,7 +21,9 @@ const useUserContextState = () => {
 
     const logout = async () => {
         try {
-            await backend.post('/logout');
+
+            await backend.post('/auth/logout');
+
             setUser(null);
             return { success: true };
         } catch (error) {
@@ -32,7 +34,8 @@ const useUserContextState = () => {
 
     const signup = async (name, email, password) => {
         try {
-            await backend.post('/signup', { name, email, password });
+
+            await backend.post('/auth/signup', { name, email, password });
             await checkAuth(); // Fetch user data after successful signup
             return { success: true };
         } catch (error) {
