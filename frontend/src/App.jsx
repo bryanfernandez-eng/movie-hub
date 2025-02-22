@@ -5,22 +5,28 @@ import NavBar from "./components/NavBar";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
-// import { AuthProvider } from "./context/authContext";
+import { UserProvider } from "./context/UserContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
+
   return (
-    // <AuthProvider>
+    <UserProvider>
       <div className="bg-slate-950 min-h-screen flex flex-col">
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={<LogoutPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/logout" element={<LogoutPage />} />
+          </Route>
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </Route>
         </Routes>
       </div>
-    // </AuthProvider>
+    </UserProvider>
   );
 }
 

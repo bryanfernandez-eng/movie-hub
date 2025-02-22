@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import InputField from "../components/InputField";
+import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const navigate = useNavigate(); 
+  const {login} = useUser(); 
   const [fields, setFields] = useState({
     email: "",
     password: "",
@@ -22,12 +26,21 @@ function LoginPage() {
       return;
     }
 
-    if (fields.password !== fields.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+    try {
+      const result = await login(fields.email, fields.password); 
+      if (result.success){
+        alert("Login succesfully")
+        navigate("/"); 
+      }
+      else{
+        alert(result.error || "Login failed.")
+      }
+
+    } catch (error) { 
+      console.error("Login error:", error); 
+      alert("An error occured during login.");
     }
 
-    alert("valid");
   };
 
   return (

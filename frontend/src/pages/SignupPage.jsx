@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import InputField from "../components/InputField";
+import {useUser} from "../context/UserContext"; 
+import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
   const [fields, setFields] = useState({
@@ -8,6 +10,9 @@ function SignupPage() {
     password: "",
     confirmPassword: "",
   });
+  const { signup } = useUser(); 
+  const navigate = useNavigate()
+; 
 
   const handleChange = (e) => {
     setFields({ ...fields, [e.target.name]: e.target.value });
@@ -31,7 +36,22 @@ function SignupPage() {
       return;
     }
 
-    alert("valid");
+    try {
+      const result = await signup(fields.name, fields.email, fields.password); 
+      if(result.success){
+        alert("Signup successful!"); 
+        navigate("/"); 
+      }
+      else{
+        alert(result.error || "Signup failed.")
+      }
+
+    } catch (error) { 
+      console.error("Signup error:", error); 
+      alert("An error occured during signup.")
+    }
+
+    
   };
 
   return (
