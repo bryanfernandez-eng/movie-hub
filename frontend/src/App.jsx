@@ -8,11 +8,13 @@ import LogoutPage from "./pages/LogoutPage";
 import { UserProvider } from "./context/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import {RemoveScrollBar} from "react-remove-scroll-bar"
 
 function App() {
 
   return (
     <UserProvider>
+      {/* <RemoveScrollBar/> */}
       <div className="bg-slate-950 min-h-screen flex flex-col">
         <NavBar />
         <Routes>

@@ -10,7 +10,8 @@ const router = express.Router();
 
 router.get("/trending", fetchTrendingMovies);
 router.get("/upcoming", fetchUpcomingMovies);
-router.get("/:id", fetchMovieDetails);
 router.get("/search", fetchMoviesBySearch);
+
+router.get("/:id", fetchMovieDetails);
 
 export default router;

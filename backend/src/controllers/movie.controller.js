@@ -27,7 +27,7 @@ export const fetchUpcomingMovies = async (req, res) => {
 
 export const fetchMovieDetails = async (req, res) => {
   const { id } = req.params;
-
+  console.log("yooooooooooooooooooooooooo")
   try {
     if (!id) {
       return res
@@ -46,6 +46,7 @@ export const fetchMovieDetails = async (req, res) => {
 export const fetchMoviesBySearch = async (req, res) => {
   const { query } = req.query;
   try {
+    console.log("herrrrrrrrrrrrrrrrrrrrrr")
     if (!query) {
       return res
         .status(400)
@@ -53,9 +54,10 @@ export const fetchMoviesBySearch = async (req, res) => {
     }
 
     const data = await getMoviesBySearch(query);
-    return res.status(200).json({ sucess: true, results: data });
+    console.log(data)
+    return res.status(200).json({ success: true, results: data });
   } catch (error) {
-    console.log("Error in fetchMovieDetails controller:", error.message);
+    console.log("Error in fetchMoviesBySearch controller:", error.message);
     res.status(500).json({ success: false, message: "Internal server error." });
   }
 };

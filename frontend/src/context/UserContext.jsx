@@ -10,8 +10,9 @@ const useUserContextState = () => {
 
     const login = async (email, password) => {
         try {
-            await backend.post('/auth/login', { email, password });
+            const response = await backend.post('/auth/login', { email, password });
             await checkAuth(); 
+
             return { success: true };
         } catch (error) {
             console.error("Login error:", error);
@@ -37,6 +38,7 @@ const useUserContextState = () => {
 
             await backend.post('/auth/signup', { name, email, password });
             await checkAuth(); // Fetch user data after successful signup
+
             return { success: true };
         } catch (error) {
             console.error("Signup error:", error);
@@ -47,7 +49,8 @@ const useUserContextState = () => {
     const checkAuth = async () => {
         setLoading(true)
         try {
-            const response = await backend.get('/check');
+            const response = await backend.get('/auth/check');
+            console.log("-- -- ---------------- response:",response)
             setUser(response.data.user);
             console.log("Auth - User:", user);
             return { success: true };
@@ -57,6 +60,7 @@ const useUserContextState = () => {
             return { success: false, error: error.response?.data?.message || "Authentication failed" };
         } finally {
             setLoading(false); 
+            console.log("-- -- user: ", user)
         }
     };
 

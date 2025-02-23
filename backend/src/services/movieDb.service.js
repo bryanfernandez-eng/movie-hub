@@ -24,6 +24,8 @@ export const getMovieDetails = async (movieId) => {
   console.log(movieId);
 
   try {
+    console.log("yooooooooooo")
+
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
       options

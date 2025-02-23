@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
       generateToken(newUser._id, res);
       res
         .status(201)
-        .json({ success: true, message: "User created successfully." });
+        .json({ success: true, message: "User created successfully.", user: {name:newUser.name, email:newUser.email, createdAt:newUser.createdAt}});
     } else {
       res.status(400).json({ success: false, message: "Invalid user data." });
     }
